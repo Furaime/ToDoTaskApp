@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TO DO</string>
+    <string name="tv_title_name">Tarefas</string>
+    <string name="create_title_name">Criar Tarefa</string>
+    <string name="create_title_hint">Título</string>
+    <string name="create_title_date_hint">Data</string>
+    <string name="create_title_hour_hint">Hora</string>
+    <string name="create_task_button_text">Criar Tarefa</string>
+    <string name="cancel_task_button_text">Cancelar</string>
+    <string name="nova_tarefa">Nova tarefa</string>
+    <string name="label_edit">label edit</string>
+    <string name="deletar">Deletar</string>
+</resources>
