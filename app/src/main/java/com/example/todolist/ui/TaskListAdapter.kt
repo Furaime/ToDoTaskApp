@@ -4,16 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.databinding.ItemTaskBinding
 import com.example.todolist.model.Task
-import android.widget.ListAdapter as ListAdapter1
 
-class TaskListAdapter : ListAdapter1<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
 
-    var listenerEdit : (Task) -> Unit = ()
-    var listenerDelete : (Task) -> Unit = ()
+class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
+
+    var listenerEdit : (Task) -> Unit = {}
+    var listenerDelete : (Task) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -21,7 +22,7 @@ class TaskListAdapter : ListAdapter1<Task, TaskListAdapter.TaskViewHolder>(DiffC
         return TaskViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int){
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
@@ -32,23 +33,22 @@ class TaskListAdapter : ListAdapter1<Task, TaskListAdapter.TaskViewHolder>(DiffC
         fun bind(item: Task){
             binding.tvTitle.text = item.title
             binding.tvDate.text = "${item.date} ${item.hour}"
-            binding.ivMore.setOnClickListener{
-                showPopup()
+            binding.ivMore.setOnClickListener {
+                showPopup(item)
             }
         }
 
-        private fun showPopup() {
+        private fun showPopup(item: Task) {
             val ivMore = binding.ivMore
             val popupMenu = PopupMenu(ivMore.context, ivMore)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
-                when(it.itemId) {
-                    R.id.action_edit -> listenerEdit()
-                    R.id.action_delete -> listenerDelete()
+                when (it.itemId) {
+                    R.id.action_edit -> listenerEdit(item)
+                    R.id.action_delete -> listenerDelete(item)
                 }
+                return@setOnMenuItemClickListener true
             }
-            return@setOnMenuItemClickListener true
-            )
             popupMenu.show()
         }
     }
